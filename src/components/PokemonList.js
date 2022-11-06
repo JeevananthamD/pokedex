@@ -6,13 +6,11 @@ import "../styles/Pokemon.css";
 const PokemonList = () => {
     return (
         <div className='PokemonList container-xxl'>
-            <div class="row">
-                <Pokemon />
-                <Pokemon />
-                <Pokemon />
-                <Pokemon />
-                <Pokemon />
-            </div>
+            <Pokemon />
+            <Pokemon />
+            <Pokemon />
+            <Pokemon />
+            <Pokemon />
         </div>
     )
 }
