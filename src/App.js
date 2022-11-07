@@ -20,6 +20,7 @@ function App() {
 
   const fetchData = async () => {
     try {
+      // This api call provides the link to get individual pokemon details
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${itemsPerPage}`);
       const pokemons = response.data.results;
       const totalPokemons = response.data.count;
@@ -27,12 +28,12 @@ function App() {
 
       setPageCount(Math.ceil(totalPokemons / itemsPerPage));
 
+      // Fetching all the details of the pokemon one by one.
       for (const pokemon of pokemons) {
         const pokemonDetail = await axios.get(pokemon.url);
         pokemonDetails.push(pokemonDetail.data);
       }
 
-      console.log("pokemonDetails", pokemonDetails);
       setData(pokemonDetails);
     }
     catch (e) {
@@ -41,16 +42,15 @@ function App() {
     }
   }
 
+  // To fetch pokemon using name
   const fetchDataByName = async (name) => {
     try {
       if (name) {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-        console.log(response)
         setPageCount(1);
         setData([response.data]);
       }
       else {
-        setOffset(0);
         fetchData();
       }
     }
@@ -60,12 +60,15 @@ function App() {
     }
   }
 
-  console.log("offset", offset);
   return (
     <div className="App">
       <Navbar fetchDataByName={fetchDataByName} />
       <PokemonList data={data} />
-      <Paginate setOffset={setOffset} itemsPerPage={itemsPerPage} pageCount={pageCount} />
+      <Paginate
+        setOffset={setOffset}
+        itemsPerPage={itemsPerPage}
+        pageCount={pageCount}
+      />
     </div>
   );
 }

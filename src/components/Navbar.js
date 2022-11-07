@@ -1,16 +1,15 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import '../styles/Navbar.css';
 
 const Navbar = ({ fetchDataByName }) => {
-    const [value, setValue] = useState("");
     const timeout = useRef(null);
 
-    const getData = (e) => {
+    const getData = (e) => { // debouncing to reduce api call
         clearTimeout(timeout.current);
         timeout.current = setTimeout(() => {
             fetchDataByName(e.target.value.trim().toLowerCase());
-        }, 1000);
+        }, 800);
     }
 
     return (
