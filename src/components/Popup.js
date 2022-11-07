@@ -1,34 +1,38 @@
 import '../styles/Popup.css';
+import { colors, buttonColors } from './Colors';
 
-const Popup = () => {
+const Popup = ({ data = {}, setIndex }) => {
+    const { abilities = [], sprites = {}, stats = [], name = "", types = [] } = data;
+    let total = 0;
+
     return (
-        <div className="popup">
+        <div className="popup" role={'button'} onClick={() => setIndex(-1)}>
             <div className='popup-container'>
                 <div className='popup-content'>
-                    <div className='popup-left'>
-                        <h2>Bulbasar</h2>
-                        <img src={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"} />
-                        <p>Abilities</p>
+                    <div className='popup-left' style={{ backgroundColor: colors[types[0].type.name] }}>
+                        <h2 className='name'>{name}</h2>
+                        <img src={sprites.front_default} />
+                        <h3>Abilities</h3>
                         <ul className='ability-list'>
-                            <li>Overgrown</li>
-                            <li>Strong</li>
+                            {abilities.map(i => <li style={{ backgroundColor: buttonColors[types[0].type.name] }} key={i.slot} className='name'>{i.ability.name}</li>)}
                         </ul>
                     </div>
                     <div className='popup-right'>
-                        <h2>Base Stats</h2>
+                        <h2 style={{ color: colors[types[0].type.name] }}>Base Stats</h2>
                         <ul className='stats-list'>
-                            <li className='stats-container'>
-                                <div className='stats'>Hp 80</div>
-                                <div className='progress-bar'>
-                                    <div className='progress-done' style={{ width: 20 }}></div>
-                                </div>
-                            </li>
-                            <li className='stats-container'>
-                                <div className='stats'>Hp 80</div>
-                                <div className='progress-bar'></div>
-                            </li>
+                            {stats.map(i => {
+                                const progressWidth = (Number(i.base_stat) / 150) * 100;
+                                total += Number(i.base_stat);
+
+                                return <li className='stats-container'>
+                                    <div className='stats name'>{i.stat.name} {i.base_stat}</div>
+                                    <div className='progress-bar'>
+                                        <div className='progress-done' style={{ width: `${progressWidth}%`, backgroundColor: colors[types[0].type.name] }}></div>
+                                    </div>
+                                </li>
+                            })}
                         </ul>
-                        <h5>Total: 525</h5>
+                        <h5>Total: {total}</h5>
                     </div>
                 </div>
             </div>

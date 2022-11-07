@@ -2,8 +2,9 @@
     background-color: gray;
     color: black;
     padding: 1em 2em; 
-    position: sticky;
+    position: fixed;
     top: 0;
+    z-index: 5;
 }
 
 .search-container {
@@ -29,4 +30,8 @@
 
 .search-container input:focus {
     outline: none;
+}
+
+.logo-container {
+    margin-bottom: 10px;
 }
